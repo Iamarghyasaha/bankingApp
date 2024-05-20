@@ -63,7 +63,7 @@ Contributions are welcome! If you find any issues or have suggestions for improv
 
 ## License
 
-This project is not licensed you can do wahtever you want! hehe acctually I've tried to write readme file first time.
+This project is not licensed you can do whatever you want! hehe:) acctually I've tried to write readme file first time.
 
 
 
