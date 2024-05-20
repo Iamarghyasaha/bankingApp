@@ -5,6 +5,7 @@ This is a simple banking application built using Spring Boot framework. The appl
 ## Features
 
 - **Account Creation**: Users can create new accounts with a unique account number.
+- **Fetch Account**: fetch any account with account id and get it's details.
 - **Deposit**: Account holders can deposit money into their accounts.
 - **Withdrawal**: Account holders can withdraw money from their accounts, provided they have sufficient balance.
 - **Transaction History**: Users can view their transaction history for each account.
@@ -13,9 +14,8 @@ This is a simple banking application built using Spring Boot framework. The appl
 
 - **Spring Boot**: Framework for building the application.
 - **Spring Data JPA**: For data persistence and managing database interactions.
-- **Spring MVC**: For building the web application and handling HTTP requests.
-- **H2 Database**: In-memory database for storing account and transaction data.
-- **Swagger**: API documentation.
+- **MySql Database**: In-memory database for storing account and transaction data.
+- **Lombok**: To reduce boilerplate code in Java classes.
 
 ## Getting Started
 
