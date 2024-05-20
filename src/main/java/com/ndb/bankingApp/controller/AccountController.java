@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -29,7 +30,7 @@ public class AccountController {
     //http://localhost:8080/api/accounts/1
     @GetMapping("/{id}")
     public ResponseEntity<AccountDto> getAccount(@PathVariable Long id){
-        return new ResponseEntity<>(accountService.getsAccountById(id),HttpStatus.OK);
+        return new ResponseEntity<>(accountService.getAccountById(id),HttpStatus.OK);
     }
     // update Account details
     //http://localhost:8080/api/accounts
@@ -49,6 +50,7 @@ public class AccountController {
         Double amount = request.get("amount");
         AccountDto accountDto = accountService.deposit(id,amount);
         return new ResponseEntity<>(accountDto,HttpStatus.OK);
+        // otherwise return ResponseEntity.ok(accountDto);
     }
 
     // withdraw amount
@@ -62,6 +64,21 @@ public class AccountController {
         Double amount = request.get("amount");
         AccountDto accountDto = accountService.withdraw(id,amount);
         return new ResponseEntity<>(accountDto,HttpStatus.OK);
+        // otherwise return ResponseEntity.ok(accountDto);
+    }
+    // get all account details
+    @GetMapping()
+    public ResponseEntity<List<AccountDto>> getAllAccounts(){
+        //return new ResponseEntity<>(accountService.getAllAccounts(),HttpStatus.OK);
+        // otherwise you can write like:
+        List<AccountDto> accounts = accountService.getAllAccounts();
+        return ResponseEntity.ok(accounts);
+    }
+    // delete account by account id
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteAccountById(@PathVariable Long id){
+        accountService.deleteAccount(id);
+        return ResponseEntity.ok("Deleted Successfully account id: "+id);
     }
 
 
