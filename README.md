@@ -55,7 +55,7 @@ You can configure the application properties in the `application.properties` fil
 
 ## Database
 
-The application uses an H2 in-memory database by default. You can change the database configuration in the `application.properties` file if needed.
+The application uses an MySql database by default. You can change the database configuration in the `application.properties` file if needed.
 
 ## Contributing
 
