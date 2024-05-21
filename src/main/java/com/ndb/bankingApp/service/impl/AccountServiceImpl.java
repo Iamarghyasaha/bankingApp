@@ -33,6 +33,32 @@ public class AccountServiceImpl implements AccountService {
     }
 
 
+//
+    @Override
+    @Transactional
+public AccountDto createAccount(AccountDto accountDto) {
+    Account account = AccountMapper.mapToAccount(accountDto);
+    Account savedAccount = accountRepository.save(account);
+
+    // Create and save the transaction
+    Transaction transaction = new Transaction();
+    transaction.setAccount(savedAccount);
+    transaction.setTransactionType(TransactionType.DEPOSIT);
+    transaction.setAmount(savedAccount.getBalance());
+    transaction.setTransactionDate(LocalDateTime.now());
+
+    // Save the transaction
+    transactionRepository.save(transaction);
+
+    return AccountMapper.mapToAccountDto(savedAccount);
+}
+
+    @Override
+    public AccountDto getAccountById(Long id) {
+        Account account = accountRepository.findById(id).orElseThrow(()->new RuntimeException("Account doesn't exist"));
+        return AccountMapper.mapToAccountDto(account);
+    }
+
     @Override
     @Transactional
     public AccountDto deposit(Long id, double amount) {
@@ -85,18 +111,6 @@ public class AccountServiceImpl implements AccountService {
         }
     }
 
-    @Override
-    @Transactional
-    public AccountDto createAccount(AccountDto accountDto) {
-       Account account = AccountMapper.mapToAccount(accountDto);
-       Account savedAccount = accountRepository.save(account);
-       return AccountMapper.mapToAccountDto(savedAccount);
-    }
-    @Override
-    public AccountDto getAccountById(Long id) {
-        Account account = accountRepository.findById(id).orElseThrow(()->new RuntimeException("Account doesn't exist"));
-        return AccountMapper.mapToAccountDto(account);
-    }
 
     @Override
     @Transactional
