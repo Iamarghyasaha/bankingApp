@@ -56,7 +56,7 @@ The following API endpoints are available:
 - **PUT /api/accounts/{accountNumber}/deposit**: Deposit money into an account.
 - **PUT /api/accounts/{accountNumber}/withdraw**: Withdraw money from an account.
 - **DELETE /api/accounts/{accountNumber}**: delete an account.
-- **GET /api/accounts/{accountNumber}/transactions**: Get transaction history for an account.
+- **GET /api/accounts/{accountNumber}/transactions**: Get transaction history for an account with timestamp.
 
 For more details and to try out the APIs, you can access the Swagger UI at [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html).
 
