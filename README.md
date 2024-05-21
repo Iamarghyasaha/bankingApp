@@ -1,3 +1,8 @@
+
+ARGHYA SAHA
+12:04 (5 hours ago)
+to me
+
 # Banking App with Spring Boot
 
 This is a simple banking application built using Spring Boot framework. The application allows users to create accounts, perform transactions such as deposit and withdrawal, and fetch account details.
@@ -6,8 +11,10 @@ This is a simple banking application built using Spring Boot framework. The appl
 
 - **Account Creation**: Users can create new accounts with a unique account number.
 - **Fetch Account**: fetch any account with account id and get it's details.
+- **Fetch All Accounts**: fetch all accounts and get it's details.
 - **Deposit**: Account holders can deposit money into their accounts.
 - **Withdrawal**: Account holders can withdraw money from their accounts, provided they have sufficient balance.
+- **Delete an Account**:  delete any account with account id.
 - **Transaction History**: Users can view their transaction history for each account.
 
 ## Technologies Used
@@ -31,20 +38,24 @@ This is a simple banking application built using Spring Boot framework. The appl
 2. Navigate to the project directory:
    
 3. Build the project using Maven:
+
+4. Set up the MySql DataBase: We are using ddl-auto=update check the applitation properties
    
-4. Run the application:
+5. Run the application:
 
    
-5. Access the application in your web browser at [http://localhost:8080](http://localhost:8080).
+6. Access the application in your web browser at [http://localhost:8080](http://localhost:8080).
 
 ## API Endpoints
 
 The following API endpoints are available:
 
 - **POST /api/accounts**: Create a new account.
-- **GET /api/accounts/{accountNumber}**: Get account details by account number.
-- **POST /api/accounts/{accountNumber}/deposit**: Deposit money into an account.
-- **POST /api/accounts/{accountNumber}/withdraw**: Withdraw money from an account.
+- **GET /api/accounts/{accountNumber}**: Get single account details by account number.
+- **GET /api/accounts**: Get All account details in the DataBase.
+- **PUT /api/accounts/{accountNumber}/deposit**: Deposit money into an account.
+- **PUT /api/accounts/{accountNumber}/withdraw**: Withdraw money from an account.
+- **DELETE /api/accounts/{accountNumber}**: delete an account.
 - **GET /api/accounts/{accountNumber}/transactions**: Get transaction history for an account.
 
 For more details and to try out the APIs, you can access the Swagger UI at [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html).
@@ -64,9 +75,3 @@ Contributions are welcome! If you find any issues or have suggestions for improv
 ## License
 
 This project is not licensed you can do whatever you want! hehe:) acctually I've tried to write readme file first time.
-
-
-
-
-
-
