@@ -1,6 +1,8 @@
 package com.ndb.bankingApp.controller;
 
 import com.ndb.bankingApp.dto.AccountDto;
+import com.ndb.bankingApp.dto.TransactionDto;
+import com.ndb.bankingApp.entity.Transaction;
 import com.ndb.bankingApp.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +21,6 @@ public class AccountController {
     public AccountController (AccountService theAccountService){
         accountService = theAccountService;
     }
-
     //Add Account Rest API
     @PostMapping("/createAccount")
     public ResponseEntity<AccountDto> addAccount(@RequestBody AccountDto accountDto){
@@ -80,7 +81,10 @@ public class AccountController {
         accountService.deleteAccount(id);
         return ResponseEntity.ok("Deleted Successfully account id: "+id);
     }
-
-
+    @GetMapping("/{id}/transactions")
+    public ResponseEntity<List<TransactionDto>> getTransactionHistory(@PathVariable Long id) {
+        List<TransactionDto> transactions = accountService.getTransactionHistory(id);
+        return ResponseEntity.ok(transactions);
+    }
 
 }

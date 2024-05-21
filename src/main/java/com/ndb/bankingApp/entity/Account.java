@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Table(name = "account")
 @Getter
@@ -21,4 +23,7 @@ public class Account {
     private String accountHolderName;
     @Column(name = "balance")
     private double balance;
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    private List<Transaction> transactions;
+    // Other fields and annotations
 }

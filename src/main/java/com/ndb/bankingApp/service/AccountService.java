@@ -1,6 +1,8 @@
 package com.ndb.bankingApp.service;
 
 import com.ndb.bankingApp.dto.AccountDto;
+import com.ndb.bankingApp.dto.TransactionDto;
+import com.ndb.bankingApp.entity.Transaction;
 
 import java.util.List;
 
@@ -12,4 +14,5 @@ public interface AccountService {
    AccountDto withdraw(Long id,double amount);
    List<AccountDto> getAllAccounts();
    void deleteAccount(Long id);
+   List<TransactionDto> getTransactionHistory(Long accountId);
 }
