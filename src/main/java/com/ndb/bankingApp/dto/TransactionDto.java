@@ -12,9 +12,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class TransactionDto {
     private Long id;
-    private Long accountId;
     private TransactionType transactionType;
     private double amount;
     private LocalDateTime transactionDate;
+    private Long accountId;
 }
 

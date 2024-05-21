@@ -20,10 +20,6 @@ public class Transaction {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "account_id", referencedColumnName = "id")
-    private Account account;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "transaction_type")
     private TransactionType transactionType;
@@ -33,5 +29,9 @@ public class Transaction {
 
     @Column(name = "transaction_date")
     private LocalDateTime transactionDate;
+
+    @ManyToOne
+    @JoinColumn(name = "account_id", referencedColumnName = "id")
+    private Account account;
 }
 
