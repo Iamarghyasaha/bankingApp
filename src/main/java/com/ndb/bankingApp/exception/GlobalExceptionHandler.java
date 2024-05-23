@@ -1,6 +1,4 @@
 package com.ndb.bankingApp.exception;
-
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -9,9 +7,18 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.time.LocalDateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
+
+//    Logging: Consider adding logging statements to record the exceptions,
+//    especially in the generic handler, which will be useful for debugging
+//    and monitoring the application's behavior.
+
+    private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler(AccountNotFoundException.class)
     public ResponseEntity<CustomErrorResponse> handleAccountNotFoundException(AccountNotFoundException ex, WebRequest rq){
@@ -24,19 +31,79 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<CustomErrorResponse>(customErrorResponse, HttpStatus.NOT_FOUND);
     }
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public ResponseEntity<String> handleTypeMismatch(MethodArgumentTypeMismatchException ex){
-        String message = "Invalid account id format ";
-        return new ResponseEntity<String>(message,HttpStatus.BAD_REQUEST);
+    public ResponseEntity<CustomErrorResponse> handleTypeMismatch(MethodArgumentTypeMismatchException ex,WebRequest rq){
+        CustomErrorResponse customErrorResponse = new CustomErrorResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                LocalDateTime.now(),
+                "Account Id must be a valid number",
+                rq.getDescription(false)
+        );
+        return new ResponseEntity<>(customErrorResponse, HttpStatus.BAD_REQUEST);
     }
     @ExceptionHandler(NumberFormatException.class)
-    public ResponseEntity<String> handleNumberFormatException (NumberFormatException ex){
-        String message = "Account Id must be a valid number ";
-        return new ResponseEntity<String>(message,HttpStatus.BAD_REQUEST);
+    public ResponseEntity<CustomErrorResponse> handleNumberFormatException (NumberFormatException ex,WebRequest rq){
+        CustomErrorResponse customErrorResponse = new CustomErrorResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                LocalDateTime.now(),
+                "Account Id must be a valid number",
+                rq.getDescription(false)
+        );
+        return new ResponseEntity<>(customErrorResponse, HttpStatus.BAD_REQUEST);
     }
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handleGenericException (Exception ex){
-        String message = "An unexpected error occurred "+ ex.getMessage();
-        return new ResponseEntity<String>(message,HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<CustomErrorResponse> handleGenericException (Exception ex,WebRequest rq){
+        CustomErrorResponse customErrorResponse = new CustomErrorResponse(
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                LocalDateTime.now(),
+                "An unexpected error occurred: " + ex.getMessage(),
+                rq.getDescription(false)
+        );
+        // Consider logging the exception here
+        return new ResponseEntity<>(customErrorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }
+
+
+// Using DRY principle in exception:
+
+
+//@ControllerAdvice
+//public class GlobalExceptionHandler {
+//
+//    private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+//
+//    @ExceptionHandler(AccountNotFoundException.class)
+//    public ResponseEntity<CustomErrorResponse> handleAccountNotFoundException(AccountNotFoundException ex, WebRequest rq){
+//        CustomErrorResponse customErrorResponse = createCustomErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage(), rq);
+//        return new ResponseEntity<>(customErrorResponse, HttpStatus.NOT_FOUND);
+//    }
+//
+//    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+//    public ResponseEntity<CustomErrorResponse> handleTypeMismatch(MethodArgumentTypeMismatchException ex, WebRequest rq){
+//        CustomErrorResponse customErrorResponse = createCustomErrorResponse(HttpStatus.BAD_REQUEST, "Account Id must be a valid number", rq);
+//        return new ResponseEntity<>(customErrorResponse, HttpStatus.BAD_REQUEST);
+//    }
+//
+//    @ExceptionHandler(NumberFormatException.class)
+//    public ResponseEntity<CustomErrorResponse> handleNumberFormatException(NumberFormatException ex, WebRequest rq){
+//        CustomErrorResponse customErrorResponse = createCustomErrorResponse(HttpStatus.BAD_REQUEST, "Account Id must be a valid number", rq);
+//        return new ResponseEntity<>(customErrorResponse, HttpStatus.BAD_REQUEST);
+//    }
+//
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<CustomErrorResponse> handleGenericException(Exception ex, WebRequest rq){
+//        logger.error("An unexpected error occurred", ex);
+//        CustomErrorResponse customErrorResponse = createCustomErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "An unexpected error occurred: " + ex.getMessage(), rq);
+//        return new ResponseEntity<>(customErrorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
+//
+//    private CustomErrorResponse createCustomErrorResponse(HttpStatus status, String message, WebRequest rq) {
+//        return new CustomErrorResponse(
+//                status.value(),
+//                LocalDateTime.now(),
+//                message,
+//                rq.getDescription(false)
+//        );
+//    }
+//}
