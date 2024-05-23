@@ -2,7 +2,6 @@ package com.ndb.bankingApp.controller;
 
 import com.ndb.bankingApp.dto.AccountDto;
 import com.ndb.bankingApp.dto.TransactionDto;
-import com.ndb.bankingApp.entity.Transaction;
 import com.ndb.bankingApp.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -67,6 +66,7 @@ public class AccountController {
         return new ResponseEntity<>(accountDto,HttpStatus.OK);
         // otherwise return ResponseEntity.ok(accountDto);
     }
+
     // get all account details
     @GetMapping()
     public ResponseEntity<List<AccountDto>> getAllAccounts(){

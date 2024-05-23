@@ -1,9 +1,7 @@
 package com.ndb.bankingApp.mappers;
 
 import com.ndb.bankingApp.dto.AccountDto;
-import com.ndb.bankingApp.entity.Account;
-
-import java.util.Optional;
+import com.ndb.bankingApp.dao.Account;
 
 public class AccountMapper {
     public static Account mapToAccount(AccountDto accountDto){

@@ -1,4 +1,4 @@
-package com.ndb.bankingApp.entity;
+package com.ndb.bankingApp.dao;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

@@ -1,9 +1,9 @@
 package com.ndb.bankingApp.service.impl;
 import com.ndb.bankingApp.dto.AccountDto;
 import com.ndb.bankingApp.dto.TransactionDto;
-import com.ndb.bankingApp.entity.Account;
-import com.ndb.bankingApp.entity.Transaction;
-import com.ndb.bankingApp.entity.TransactionType;
+import com.ndb.bankingApp.dao.Account;
+import com.ndb.bankingApp.dao.Transaction;
+import com.ndb.bankingApp.dao.TransactionType;
 import com.ndb.bankingApp.exception.AccountNotFoundException;
 import com.ndb.bankingApp.mappers.AccountMapper;
 import com.ndb.bankingApp.mappers.TransactionMapper;
@@ -11,13 +11,14 @@ import com.ndb.bankingApp.repository.AccountRepository;
 import com.ndb.bankingApp.service.AccountService;
 import com.ndb.bankingApp.service.TransactionService;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 import java.util.stream.Collectors;
 
-
+@Slf4j
 @Service
 public class AccountServiceImpl implements AccountService {
 
@@ -41,8 +42,16 @@ public AccountDto createAccount(AccountDto accountDto) {
 
 @Override
 public AccountDto getAccountById(Long id) {
-    Account account = accountRepository.findById(id).orElseThrow(()->new AccountNotFoundException("Account doesn't exist id :"+id));
-    return AccountMapper.mapToAccountDto(account);
+    try {
+        Account account = accountRepository.findById(id).orElseThrow(() -> new AccountNotFoundException("Account doesn't exist id :" + id));
+        return AccountMapper.mapToAccountDto(account);
+    } catch (AccountNotFoundException e) {
+        log.info("Account not found: {} {}",id, e.getMessage());
+        throw e;
+    } catch (Exception e) {
+        log.info("An unexpected error occurred: " + e.getMessage());
+        throw new RuntimeException("Unexpected error occurred while fetching account by id: " + id, e);
+    }
 }
 
 @Override
@@ -50,11 +59,12 @@ public AccountDto getAccountById(Long id) {
 public AccountDto deposit(Long id, double amount) {
     Account account = accountRepository.findById(id).orElseThrow(() -> new AccountNotFoundException("Account doesn't exist id :"+id));
     double currentAmount = account.getBalance();
-    double newBalance = currentAmount + amount;
-    account.setBalance(newBalance);
-    Account savedAccount = accountRepository.save(account);
-    transactionService.createTransaction(savedAccount.getId(),TransactionType.DEPOSIT,amount);
-    return AccountMapper.mapToAccountDto(savedAccount);
+        double newBalance = currentAmount + amount;
+        account.setBalance(newBalance);
+        Account savedAccount = accountRepository.save(account);
+        transactionService.createTransaction(savedAccount.getId(),TransactionType.DEPOSIT,amount);
+        return AccountMapper.mapToAccountDto(savedAccount);
+
 }
 
 @Override
@@ -69,6 +79,7 @@ public AccountDto withdraw(Long id, double amount) {
         transactionService.createTransaction(savedAccount.getId(),TransactionType.WITHDRAWAL,amount);
         return AccountMapper.mapToAccountDto(account);
     } else {
+        log.info("Your account doesn't have sufficient balance, your current balance is: ",account.getBalance());
         throw new RuntimeException("Your account doesn't have sufficient balance");
     }
 }
@@ -102,6 +113,7 @@ public List<TransactionDto> getTransactionHistory(Long id) {
             .orElseThrow(() ->new AccountNotFoundException("Account doesn't exist id :"+id));
     // Get the list of transactions associated with the account
     List<Transaction> transactions = account.getTransactions();
+    // you can use transactions.stream().map((account)->AccountMapper.mapToAccountDto(account)).collect(Collectors.toList());
     return TransactionMapper.mapToTransactionDtoList(transactions);
     }
 }

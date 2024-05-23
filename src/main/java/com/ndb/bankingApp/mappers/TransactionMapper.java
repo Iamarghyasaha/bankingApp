@@ -2,9 +2,8 @@ package com.ndb.bankingApp.mappers;
 
 
 import com.ndb.bankingApp.dto.TransactionDto;
-import com.ndb.bankingApp.entity.Account;
-import com.ndb.bankingApp.entity.Transaction;
-import com.ndb.bankingApp.entity.TransactionType;
+import com.ndb.bankingApp.dao.Account;
+import com.ndb.bankingApp.dao.Transaction;
 
 import java.util.ArrayList;
 import java.util.List;

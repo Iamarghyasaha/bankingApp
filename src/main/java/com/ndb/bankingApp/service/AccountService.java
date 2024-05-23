@@ -2,7 +2,6 @@ package com.ndb.bankingApp.service;
 
 import com.ndb.bankingApp.dto.AccountDto;
 import com.ndb.bankingApp.dto.TransactionDto;
-import com.ndb.bankingApp.entity.Transaction;
 
 import java.util.List;
 

@@ -1,17 +1,19 @@
 package com.ndb.bankingApp.service.impl;
 
-import com.ndb.bankingApp.entity.Account;
-import com.ndb.bankingApp.entity.Transaction;
-import com.ndb.bankingApp.entity.TransactionType;
+import com.ndb.bankingApp.dao.Account;
+import com.ndb.bankingApp.dao.Transaction;
+import com.ndb.bankingApp.dao.TransactionType;
 import com.ndb.bankingApp.repository.AccountRepository;
 import com.ndb.bankingApp.repository.TransactionRepository;
 import com.ndb.bankingApp.service.TransactionService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
+
+@Slf4j
 @Service
 public class TransactionServiceImpl implements TransactionService {
     private TransactionRepository transactionRepository;
@@ -25,8 +27,9 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public Transaction createTransaction(Long accountId, TransactionType transactionType, double amount) {
         // Retrieve the Account
-        Account account = accountRepository.findById(accountId)
-                .orElseThrow(() -> new RuntimeException("Account not found"));
+           Account account = accountRepository.findById(accountId)
+                   .orElseThrow(() -> new RuntimeException("Account not found"));
+           log.info("error occurred for {} {}",accountId,TransactionServiceImpl.class);
 
         // Create the Transaction
         Transaction transaction = new Transaction();
@@ -38,7 +41,6 @@ public class TransactionServiceImpl implements TransactionService {
         transaction.setTransactionType(transactionType);
         transaction.setAmount(amount);
         transaction.setTransactionDate(LocalDateTime.now());
-
         // Save the Transaction
         return transactionRepository.save(transaction);
     }

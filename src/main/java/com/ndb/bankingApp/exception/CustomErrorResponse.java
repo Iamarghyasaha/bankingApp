@@ -8,7 +8,10 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CustomErrorResponse {
+public class
+
+
+CustomErrorResponse {
 
     private int statusCode;
     private LocalDateTime timeStamp;

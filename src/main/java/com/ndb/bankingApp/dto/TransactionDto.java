@@ -1,6 +1,6 @@
 package com.ndb.bankingApp.dto;
 
-import com.ndb.bankingApp.entity.TransactionType;
+import com.ndb.bankingApp.dao.TransactionType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
