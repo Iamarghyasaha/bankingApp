@@ -4,6 +4,7 @@ import com.ndb.bankingApp.dto.TransactionDto;
 import com.ndb.bankingApp.entity.Account;
 import com.ndb.bankingApp.entity.Transaction;
 import com.ndb.bankingApp.entity.TransactionType;
+import com.ndb.bankingApp.exception.AccountNotFoundException;
 import com.ndb.bankingApp.mappers.AccountMapper;
 import com.ndb.bankingApp.mappers.TransactionMapper;
 import com.ndb.bankingApp.repository.AccountRepository;
@@ -40,14 +41,14 @@ public AccountDto createAccount(AccountDto accountDto) {
 
 @Override
 public AccountDto getAccountById(Long id) {
-    Account account = accountRepository.findById(id).orElseThrow(()->new RuntimeException("Account doesn't exist"));
+    Account account = accountRepository.findById(id).orElseThrow(()->new AccountNotFoundException("Account doesn't exist id :"+id));
     return AccountMapper.mapToAccountDto(account);
 }
 
 @Override
 @Transactional
 public AccountDto deposit(Long id, double amount) {
-    Account account = accountRepository.findById(id).orElseThrow(() -> new RuntimeException("Account doesn't exist"));
+    Account account = accountRepository.findById(id).orElseThrow(() -> new AccountNotFoundException("Account doesn't exist id :"+id));
     double currentAmount = account.getBalance();
     double newBalance = currentAmount + amount;
     account.setBalance(newBalance);
@@ -59,7 +60,7 @@ public AccountDto deposit(Long id, double amount) {
 @Override
 @Transactional
 public AccountDto withdraw(Long id, double amount) {
-    Account account = accountRepository.findById(id).orElseThrow(() -> new RuntimeException("Account doesn't exist"));
+    Account account = accountRepository.findById(id).orElseThrow(() -> new AccountNotFoundException("Account doesn't exist id :"+id));
     double currentBalance = account.getBalance();
     if (currentBalance >= amount) {
         double newBalance = currentBalance - amount;
@@ -89,16 +90,16 @@ public List<AccountDto> getAllAccounts() {
 
 @Override
 public void deleteAccount(Long id) {
-    Account account = accountRepository.findById(id).orElseThrow(()->new RuntimeException("Account doesn't exist"));
+    Account account = accountRepository.findById(id).orElseThrow(()->new AccountNotFoundException("Account doesn't exist id :"+id));
     accountRepository.deleteById(id);
 }
 
 
 @Override
-public List<TransactionDto> getTransactionHistory(Long accountId) {
+public List<TransactionDto> getTransactionHistory(Long id) {
     // Retrieve the account from the database
-    Account account = accountRepository.findById(accountId)
-            .orElseThrow(() -> new RuntimeException("Account not found"));
+    Account account = accountRepository.findById(id)
+            .orElseThrow(() ->new AccountNotFoundException("Account doesn't exist id :"+id));
     // Get the list of transactions associated with the account
     List<Transaction> transactions = account.getTransactions();
     return TransactionMapper.mapToTransactionDtoList(transactions);
