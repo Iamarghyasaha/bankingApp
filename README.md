@@ -23,6 +23,8 @@ This is a simple banking application built using Spring Boot framework. The appl
 - **Spring Data JPA**: For data persistence and managing database interactions.
 - **MySql Database**: In-memory database for storing account and transaction data.
 - **Lombok**: To reduce boilerplate code in Java classes.
+- **Slf4j**: For logging purpose.
+- **Swagger**: For api specifications and same UI representaion.
 
 ## Getting Started
 
@@ -45,6 +47,8 @@ This is a simple banking application built using Spring Boot framework. The appl
 
    
 6. Access the application in your web browser at [http://localhost:8080](http://localhost:8080).
+7. Swagger : http://localhost:8080/swagger-ui.html
+   
 
 ## API Endpoints
 
