@@ -14,7 +14,7 @@
         <file>app.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <!-- daily rollover -->
-            <fileNamePattern>app.%d{yyyy-MM-dd_HH-mm}.%i.log</fileNamePattern>
+            <fileNamePattern>app.%d{yyyy-MM-dd_HH}.%i.log</fileNamePattern>
             <!--for each file max size can be 10 mb-->
             <maxFileSize>10MB</maxFileSize>
             <!-- keep 30 days' worth of history, after that delete oldest one-->
@@ -26,7 +26,7 @@
     </appender>
 
     <!-- Root logger configuration -->
-    <root level="debug">
+    <root level="info">
         <appender-ref ref="CONSOLE" />
         <appender-ref ref="FILE" />
     </root>
