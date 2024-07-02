@@ -1,0 +1,5 @@
+2024-07-03 23:37:56.9040 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2024-07-03 23:37:57.0010 [main] INFO  c.n.bankingApp.BankingAppApplication - Starting BankingAppApplication using Java 21.0.2 with PID 936 (C:\Users\sahaa\OneDrive\Desktop\bankingApp\target\classes started by sahaa in C:\Users\sahaa\OneDrive\Desktop\bankingApp)
+2024-07-03 23:37:57.0030 [main] INFO  c.n.bankingApp.BankingAppApplication - No active profile set, falling back to 1 default profile: "default"
+2024-07-03 23:37:59.2050 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-07-03 23:37:59.3960 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 170 ms. Found 2 JPA repository interfaces.
