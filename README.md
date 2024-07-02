@@ -47,6 +47,8 @@ This is a simple banking application built using Spring Boot framework. The appl
 
    
 6. Access the application in your web browser at [http://localhost:8080](http://localhost:8080).
+7. Swagger : http://localhost:8080/swagger-ui.html
+   
 
 ## API Endpoints
 
