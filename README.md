@@ -12,6 +12,7 @@ Fetch the previous transaction history with time stamp and as well handled each 
 - **Withdrawal**: Account holders can withdraw money from their accounts, provided they have sufficient balance.
 - **Delete an Account**:  delete any account with account id.
 - **Transaction History**: Users can view their transaction history for each account.
+- **Logs generations and Email**: Application log wiil be genarating in a log folder and the same sent to a specific mail id.
   
 ## Technologies Used
 - **Spring Boot**: Framework for building the application.
